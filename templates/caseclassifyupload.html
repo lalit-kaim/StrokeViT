@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
+        <link type="text/css" rel="stylesheet" href="../static/style/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Results</title>
+    </head>
+    <body style="background-color: cadetblue;display: contents;">
+        <img id="bgimage" src="/static/style/bg.jpg" alt="img">
+        <div class="container">
+            <div class="divHeading mt-5 px-3">
+                <h2 style="margin: 0px;">Classification Output</h2>
+            </div>
+            <div class="divHeading2 mt-5 px-3">
+                <h5 class="text-center">Haemorrhage : {{Ham_Count}}</h5>
+                <h5 class="text-center">Infarct : {{Inf_Count}}</h5>
+                <h5 class="text-center">Normal : {{Norm_Count}}</h5>
+            </div>
+        </div>
+        <div class="container mt-5 mb-5">
+            <table class="table table-dark" id="caseTable">
+                <thead>
+                    <tr>
+                        <th style="padding-left: 10%;">Image Name</th>
+                        <th>Prediction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(0, len)%}
+                        <tr>
+                            <td style="padding-left: 10%;">{{file_name[i]}}</td>
+                            {% if actual_case == pred[i] %}
+                                <td>{{pred[i]}}</td>
+                            {% else %}
+                                <td class="text-danger">{{pred[i]}}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="container-fluid d-inline-flex ccdiv text-center">
+        {% for i in range(0, len)%}
+            <div class="col-3">
+                <img class="img-fluid img-thumbnail w-50 mt-1" src="{{url_for('static', filename='case/' + image[i])}}" alt="{{img}}">
+                <!-- <h5>{{file_name[i]}}</h5> -->
+                <h5 class="prediction">{{pred[i]}}</h5>
+            </div>
+        {% endfor %}
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script> -->
+        <!-- <script>
+            $(document).ready(function () {
+                $("#caseTable").table2excel({
+                    filename: "Case01_II.xls"
+                });
+            });
+            console.log("file Created")
+        </script> -->
+    </body> 
+</html>
